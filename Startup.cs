@@ -19,6 +19,7 @@ using sampleapi.Data;
 using sampleapi.Data.Entities;
 using Microsoft.IdentityModel.Tokens;
 using sampleapi.Model;
+using sampleapi.DBContext;
 
 namespace sampleapi
 {
@@ -36,8 +37,12 @@ namespace sampleapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<JWTConfig>(Configuration.GetSection("JWTConfig"));
-            services.AddDbContext<AppDbContext>(opt => { opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); 
-            });
+            services.AddDbContext<AppDbContext>(opt => { opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });
+               //  services.AddDbContext<vpireportingContext>();
+           // services.AddScoped<IvpireportingContext, vpireportingContext>();
+
+     
+
             services.AddIdentity<AppUser, IdentityRole>(opt => { }).AddEntityFrameworkStores<AppDbContext>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
             {
